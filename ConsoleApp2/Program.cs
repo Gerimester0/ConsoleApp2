@@ -9,6 +9,11 @@ namespace Json_
 
         public List<int> korok { get; set; }
     }
+    class Diak 
+    {
+        public string nev { get; set; }
+        public List<int> jegyek { get; set; }
+    }
     internal class Program
     {
         
@@ -25,6 +30,27 @@ namespace Json_
             }
             //első életkor
             Console.WriteLine($"{adat.nevek} életkora:{adat.korok[0]}");
+
+            fajl = File.ReadAllText("diakok.json", System.Text.Encoding.Latin1);
+            Console.WriteLine(fajl);
+            List<Diak> diakok = JsonSerializer.Deserialize<List<Diak>>(fajl);
+            Console.Write("Keresett név: ");
+            String neve = Console.ReadLine();
+
+            bool megvan = false;
+
+            foreach (var diak in diakok)
+            {
+                if (diak.nev == neve)
+                {
+                    Console.WriteLine($"Átlaga: "+diak.jegyek.Average());
+                    megvan = true;
+                }
+            }
+            if (megvan == false) 
+            {
+                Console.WriteLine("Nincs ilyen nevű diák!");
+            }
         }
     }
 }
